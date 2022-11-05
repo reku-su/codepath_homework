@@ -1,102 +1,50 @@
-# Project 7 - WordPress Pen Testing
+# Pen Testing Live Targets
 
-Time spent: **15** hours spent in total
+Time spent: **3** hours spent in total
 
-> Objective: Find, analyze, recreate, and document **five vulnerabilities** affecting an old version of WordPress
+> Objective: Identify vulnerabilities in three different versions of the Globitek website: blue, green, and red.
 
-## Pen Testing Report
+The six possible exploits are:
 
-### 1. WordPress 2.5-4.6 Authenticated Stored Cross-Site Scripting via Image FileName
+* Username Enumeration
+* Insecure Direct Object Reference (IDOR)
+* SQL Injection (SQLi)
+* Cross-Site Scripting (XSS)
+* Cross-Site Request Forgery (CSRF)
+* Session Hijacking/Fixation
 
-- [X] Summary: 
-  - Vulnerability types: Cross-Site Scripting XSS
-  - Tested in version: 4.2
-  - Fixed in version: 4.2.10
-- [X] GIF Walkthrough:
-- <img src='https://i.imgur.com/8oELbWd.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-- [X] Steps to recreate: Insert an image file with the title as: ```a<img src=a ONERROR=alert('pranked!!')>```. Now, viewing a page with that image will trigger a JS alert.
-- [X] Affected source code:
-  - [Link 1](https://core.trac.wordpress.org/browser/tags/4.2.2/src/wp-admin/includes/media.php)
-  
-### 2. Wordpress <= 4.2 Unauthenticated Stored Cross-Site Scripting
+Each color is vulnerable to only 2 of the 6 possible exploits. First discover which color has the specific vulnerability, then write a short description of how to exploit it, and finally demonstrate it using screenshots compiled into a GIF.
 
-- [X] Summary:
-  - Vulnerability types: XSS
-  - Tested in version: 4.2
-  - Fixed in version: 4.2.1
-- [X] GIF Walkthrough:
-- <img src='https://i.imgur.com/Aaie6Bl.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-- [X] Steps to recreate: Write a javascript line onto a comment. In this case, we wrote ```<a title='x onmouseover=alert(unescape(/gonna%20hack%20u!!!!/.source)) iamsoswag``` as a comment. Hovering over the box triggers an alert.
-- [X] Affected source code:
-  - [Link 1](https://core.trac.wordpress.org/browser/tags/4.2/src/wp-includes/wp-db.php)
+## Blue
 
-### 3. WordPress 4.0-4.7.2 - Authenticated Stored Cross-Site Scripting (XSS) in YouTube URL Embeds
+Vulnerability #1: Session Hijacking
 
-- [X] Summary: 
-  - Vulnerability types: XSS
-  - Tested in version: 4.2
-  - Fixed in version: 4.2.13
-- [X] GIF Walkthrough:
-- <img src='https://i.imgur.com/7ZHZazd.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-- [X] Steps to recreate: Write the following line in the body of a page or post: [embed src='https://youtube.com/embed/42069\x3csvg onload=alert(420)\x3e'][/embed]
-- [X] Affected source code:
-  - [Link 1](https://core.trac.wordpress.org/browser/tags/4.2/src/wp-includes/media.php)
+Description: Using the hacktool to change PHP session IDs, we can use Burp Suite to intercept the attacker's login attempt to modify the session ID to one obtained from a victim. Once changed, the attacker is logged in with the victim's ID.
 
-### 4. WP < 6.0.3 - Data Exposure via REST Terms/Tags Endpoint
+<img src="blue-vuln1.gif">
 
-- [X] Summary: 
-  - Vulnerability types: Information Exposure
-  - Tested in version: 4.2
-  - Fixed in version: 4.2.34
-- [X] GIF Walkthrough:
-- <img src='https://i.imgur.com/Zgt0wT1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-- [X] Steps to recreate: Follow the link: http://wpdistillery.vm/wp-admin/js/  
-- [X] Affected source code:
-  - [Link 1](https://github.com/WordPress/wordpress-develop/commit/ebaac57a9ac0174485c65de3d32ea56de2330d8e)
 
-### 5. (Optional) Vulnerability Name or ID
+## Green
 
-- [ ] Summary: 
-  - Vulnerability types:
-  - Tested in version:
-  - Fixed in version: 
-- [ ] GIF Walkthrough:
-- [ ] Steps to recreate: 
-- [ ] Affected source code:
-  - [Link 1](https://core.trac.wordpress.org/browser/tags/version/src/source_file.php) 
+Vulnerability #1: Cross-Site Scripting
 
-## Assets
+Description: Users can inject XSS onto the body of a feedback. In here we used ```<script>alert('i hope somebody finds this');</script>``` to bring up an alert every time the feedback page is opened.
 
-List any additional assets, such as scripts or files
+<img src="green-vuln1.gif">
+<img src="xss1.jpg">
+<img src="xss2.jpg">
 
-## Resources
 
-- [WordPress Source Browser](https://core.trac.wordpress.org/browser/)
-- [WordPress Developer Reference](https://developer.wordpress.org/reference/)
+## Red
 
-GIFs created with  ...
-<!-- Recommended GIF Tools:
-[Kap](https://getkap.co/) for macOS
-[ScreenToGif](https://www.screentogif.com/) for Windows
-[peek](https://github.com/phw/peek) for Linux. -->
+Vulnerability #1: Insecure Direct Object Reference
+
+Description: Modify the ID in the page's URL until we get unauthorized access to an account. Burp Suite was used to make the process a bit automated.
+
+<img src="red-vuln1.gif">
+
 
 ## Notes
 
-Describe any challenges encountered while doing the work
-- Trying to find the vulnerabilities and a hint on where to start. Once I figured out part of the puzzle, it was clear what I should be doing.
+I wish the login for the website was displayed somewhere on the project or unit page. Had to scavenge the CodePath course portal to find it at first.
 
-## License
-
-    Copyright [2022] [Rex Tabora]
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
