@@ -31,8 +31,8 @@ Vulnerability #1: Cross-Site Scripting
 Description: Users can inject XSS onto the body of a feedback. In here we used ```<script>alert('i hope somebody finds this');</script>``` to bring up an alert every time the feedback page is opened.
 
 <img src="green-vuln1.gif">
-<img src="xss1.jpg">
-<img src="xss2.jpg">
+<img src="xss1.JPG">
+<img src="xss2.JPG">
 
 
 ## Red
