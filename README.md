@@ -1,102 +1,28 @@
-# Project 7 - WordPress Pen Testing
+# Honeypot Assignment
 
-Time spent: **15** hours spent in total
+**Time spent:** **12** hours spent in total
 
-> Objective: Find, analyze, recreate, and document **five vulnerabilities** affecting an old version of WordPress
+**Objective:** Create a honeynet using MHN-Admin. Present your findings as if you were requested to give a brief report of the current state of Internet security. Assume that your audience is a current employer who is questioning why the company should allocate anymore resources to the IT security team.
 
-## Pen Testing Report
+### MHN-Admin Deployment (Required)
 
-### 1. WordPress 2.5-4.6 Authenticated Stored Cross-Site Scripting via Image FileName
+**Summary:** MNH-Admin Deployment was done with GCP by configuring firewall rules and establishing SSH access to the VM via the cloud platform.
 
-- [X] Summary: 
-  - Vulnerability types: Cross-Site Scripting XSS
-  - Tested in version: 4.2
-  - Fixed in version: 4.2.10
-- [X] GIF Walkthrough:
-- <img src='https://i.imgur.com/8oELbWd.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-- [X] Steps to recreate: Insert an image file with the title as: ```a<img src=a ONERROR=alert('pranked!!')>```. Now, viewing a page with that image will trigger a JS alert.
-- [X] Affected source code:
-  - [Link 1](https://core.trac.wordpress.org/browser/tags/4.2.2/src/wp-admin/includes/media.php)
-  
-### 2. Wordpress <= 4.2 Unauthenticated Stored Cross-Site Scripting
+<img src="e1.gif">
 
-- [X] Summary:
-  - Vulnerability types: XSS
-  - Tested in version: 4.2
-  - Fixed in version: 4.2.1
-- [X] GIF Walkthrough:
-- <img src='https://i.imgur.com/Aaie6Bl.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-- [X] Steps to recreate: Write a javascript line onto a comment. In this case, we wrote ```<a title='x onmouseover=alert(unescape(/gonna%20hack%20u!!!!/.source)) iamsoswag``` as a comment. Hovering over the box triggers an alert.
-- [X] Affected source code:
-  - [Link 1](https://core.trac.wordpress.org/browser/tags/4.2/src/wp-includes/wp-db.php)
+### Dionaea Honeypot Deployment (Required)
 
-### 3. WordPress 4.0-4.7.2 - Authenticated Stored Cross-Site Scripting (XSS) in YouTube URL Embeds
+**Summary:** Named after the venus flytrap, Dionaea is a honeypot that captures incoming attack payloads and malware. It emulates a vulnerable Windows environment and captures information on malware used to exploit systems.
 
-- [X] Summary: 
-  - Vulnerability types: XSS
-  - Tested in version: 4.2
-  - Fixed in version: 4.2.13
-- [X] GIF Walkthrough:
-- <img src='https://i.imgur.com/7ZHZazd.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-- [X] Steps to recreate: Write the following line in the body of a page or post: [embed src='https://youtube.com/embed/42069\x3csvg onload=alert(420)\x3e'][/embed]
-- [X] Affected source code:
-  - [Link 1](https://core.trac.wordpress.org/browser/tags/4.2/src/wp-includes/media.php)
+<img src="e2.gif">
+<img src="e3.gif">
 
-### 4. WP < 6.0.3 - Data Exposure via REST Terms/Tags Endpoint
+### Database Backup (Required) 
 
-- [X] Summary: 
-  - Vulnerability types: Information Exposure
-  - Tested in version: 4.2
-  - Fixed in version: 4.2.34
-- [X] GIF Walkthrough:
-- <img src='https://i.imgur.com/Zgt0wT1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-- [X] Steps to recreate: Follow the link: http://wpdistillery.vm/wp-admin/js/  
-- [X] Affected source code:
-  - [Link 1](https://github.com/WordPress/wordpress-develop/commit/ebaac57a9ac0174485c65de3d32ea56de2330d8e)
+**Summary:** The information in the session.json file includes timestamps, src IPs, destination and source ports.
 
-### 5. (Optional) Vulnerability Name or ID
-
-- [ ] Summary: 
-  - Vulnerability types:
-  - Tested in version:
-  - Fixed in version: 
-- [ ] GIF Walkthrough:
-- [ ] Steps to recreate: 
-- [ ] Affected source code:
-  - [Link 1](https://core.trac.wordpress.org/browser/tags/version/src/source_file.php) 
-
-## Assets
-
-List any additional assets, such as scripts or files
-
-## Resources
-
-- [WordPress Source Browser](https://core.trac.wordpress.org/browser/)
-- [WordPress Developer Reference](https://developer.wordpress.org/reference/)
-
-GIFs created with  ...
-<!-- Recommended GIF Tools:
-[Kap](https://getkap.co/) for macOS
-[ScreenToGif](https://www.screentogif.com/) for Windows
-[peek](https://github.com/phw/peek) for Linux. -->
+*Be sure to upload session.json directly to this GitHub repo/branch in order to get full credit.*
 
 ## Notes
 
-Describe any challenges encountered while doing the work
-- Trying to find the vulnerabilities and a hint on where to start. Once I figured out part of the puzzle, it was clear what I should be doing.
-
-## License
-
-    Copyright [2022] [Rex Tabora]
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+Was a bit confusing when certain terminals decide to deny permissions.
